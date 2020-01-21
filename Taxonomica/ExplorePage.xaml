@@ -1,0 +1,40 @@
+﻿<Page
+    x:Class="Taxonomica.ExplorePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Taxonomica"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <GridView x:Name="ExploreGrid">
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="Margin" Value="5, 5, 5, 5"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+            <GridView.ItemTemplate>
+                <DataTemplate x:Name="ImageOverlayTemplate">
+                    <Grid Width="400" Height="300">
+                        <Image Source="{Binding Image}" Stretch="UniformToFill"/>
+                        <StackPanel Orientation="Vertical" Height="60" VerticalAlignment="Bottom" Padding="5" 
+                                    Opacity=".7" Background="{ThemeResource MyAcrylicBrush}" >
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Name}"/>
+                        </StackPanel>
+                        <ProgressRing IsActive="{Binding Loading}" />
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid x:Name="MaxItemsWrapGrid" 
+                           MaximumRowsOrColumns="3" 
+                           Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+            
+        </GridView>
+    </Grid>
+</Page>
