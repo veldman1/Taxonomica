@@ -1,0 +1,55 @@
+﻿<Page
+    x:Class="Taxonomica.TaxonPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Taxonomica"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <CommandBar Grid.Row="0" OverflowButtonVisibility="Collapsed">
+            <CommandBar.Content>
+                <Button Click="Back_Clicked" Style="{StaticResource NavigationBackButtonNormalStyle}" VerticalAlignment="Top"/>
+            </CommandBar.Content>
+        </CommandBar>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <ProgressRing Grid.Column="1" Grid.Row="1" x:Name="ProgressItem" />
+            
+            <ListView Grid.Column="1" x:Name="TheList" Grid.Row="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel HorizontalAlignment="Stretch" Tapped="StackPanel_Tapped" Padding="10">
+                            <TextBlock Text="{Binding TaxonName}" />
+                            <TextBlock Text="{Binding RankName}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <StackPanel Padding="32" Grid.Column="0" Background="FloralWhite">
+                <Image Grid.Column="1" x:Name="TaxonImage" />
+                <TextBlock IsTextSelectionEnabled="True" FontSize="18" Margin="0 16 0 0">
+                    <Run x:Name="TaxonName" FontWeight="Bold" />
+                    <Run x:Name="CommonName" />
+                </TextBlock>
+                <TextBlock x:Name="RankName" FontSize="16" Margin="0 16 0 0" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="Taxonomica.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Taxonomica"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"> 
+
+    <Grid>
+        <NavigationView IsBackButtonVisible="Collapsed" IsTabStop="False" ItemInvoked="NavigationView_ItemInvoked">
+            <NavigationView.MenuItems>
+                <NavigationViewItem>
+                    <TextBlock Tag="hierarchy">Hierarchy</TextBlock>
+                </NavigationViewItem>
+                <NavigationViewItem>
+                    <TextBlock Tag="explore">Explore</TextBlock>
+                </NavigationViewItem>
+                <NavigationViewItem>
+                    <TextBlock Tag="about">About</TextBlock>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <Frame x:Name="contentFrame"></Frame>
+        </NavigationView>
+    </Grid>
+</Page>
