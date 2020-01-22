@@ -30,7 +30,7 @@ namespace Taxonomica
             {
                 await DispatcherUtil.Dispatch(async () =>
                 {
-                    var tsnList = new List<string> { "173420", "161061", "159785", "180593", "179914" };
+                    var tsnList = new List<string> { "173420", "161061", "159785" };
                     var exploreItems = new ObservableCollection<ExploreItem>();
 
                     ExploreGrid.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = exploreItems });
@@ -45,6 +45,7 @@ namespace Taxonomica
                         var record = await RequestManager.RequestFullRecord(tsn);
 
                         newItem.Name = record.GetCommonName();
+                        newItem.TSN = record.ScientificName.TSN;
 
                         var imageModelLow = await RequestManager.RequestWikispeciesImage(record.ScientificName.CombinedName, 50);
                         newItem.Image = new BitmapImage(new Uri(imageModelLow.GetThumbnail(), UriKind.Absolute));
@@ -58,6 +59,12 @@ namespace Taxonomica
                     await Task.WhenAll(tasks);
                 });
             });
+        }
+
+        private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var tsn = (((Grid)sender).DataContext as ExploreItem).TSN;
+            Frame.Navigate(typeof(TaxonPage), new TaxonPageNavigationArgs { TSN = tsn });
         }
     }
 }

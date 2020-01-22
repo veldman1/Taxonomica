@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Taxonomica
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class TaxonPage : Page
     {
         public TaxonPage()
@@ -45,7 +43,7 @@ namespace Taxonomica
                 {
                     if (args == null)
                     {
-                        await LoadKingdoms();
+                        await LoadRoot();
                     }
                     else
                     {
@@ -97,34 +95,67 @@ namespace Taxonomica
             await DispatcherUtil.Dispatch(() =>
             {
                 TheList.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = children });
+                if (!children.Any())
+                {
+                    DescendingGrid.Visibility = Visibility.Collapsed;
+                }
+
                 TaxonName.Text = currentTaxonHierarchy.TaxonName;
-
                 CommonName.Text = currentTaxon.GetCommonName();
-
                 RankName.Text = currentTaxonHierarchy.RankName;
+
+                if (string.IsNullOrWhiteSpace(currentTaxon.Author.Author))
+                {
+                    AuthorshipEntry.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    AuthorshipEntry.Visibility = Visibility.Visible;
+                    AuthorName.Text = currentTaxon.Author.Author;
+                }
 
                 if (imageSource != null)
                 {
                     TaxonImage.Source = new BitmapImage(new Uri(imageSource, UriKind.Absolute));
                 }
+
+                var synonyms = currentTaxon.SynonymList.Synonyms
+                    .Where(x => x != null)
+                    .Select(x => new SynonymItem(x));
+
+                var synonymsCollection = new ObservableCollection<SynonymItem>(synonyms);
+
+                if (synonymsCollection.Count == 0)
+                {
+                    SynonymsList.Visibility = Visibility.Collapsed;
+                    SynonymsButton.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    SynonymsList.Visibility = Visibility.Visible;
+                    SynonymsButton.Visibility = Visibility.Visible;
+                    SynonymsList.SetBinding(ListBox.ItemsSourceProperty, new Binding { Source = synonymsCollection });
+                }
             });
         }
 
-        private async Task LoadKingdoms()
+        private async Task LoadRoot()
         {
             var kingdoms = new List<HierarchyItem>()
             {
-                            new HierarchyItem { TSN = "202423", TaxonName = "Animalia", RankName = "Kingdom" },
-                            new HierarchyItem { TSN = "202422", TaxonName = "Plantae", RankName = "Kingdom" },
-                            new HierarchyItem { TSN = "555705", TaxonName = "Fungi", RankName = "Kingdom" },
-                            new HierarchyItem { TSN = "630577", TaxonName = "Fungi", RankName = "Kingdom" },
-                            new HierarchyItem { TSN = "630578", TaxonName = "Chromista", RankName = "Kingdom" },
-                            new HierarchyItem { TSN = "935939", TaxonName = "Archaea", RankName = "Kingdom" },
+                new HierarchyItem { TSN = "202423", TaxonName = "Animalia", RankName = "Kingdom" },
+                new HierarchyItem { TSN = "202422", TaxonName = "Plantae", RankName = "Kingdom" },
+                new HierarchyItem { TSN = "555705", TaxonName = "Fungi", RankName = "Kingdom" },
+                new HierarchyItem { TSN = "630577", TaxonName = "Protozoa", RankName = "Kingdom" },
+                new HierarchyItem { TSN = "630578", TaxonName = "Chromista", RankName = "Kingdom" },
+                new HierarchyItem { TSN = "935939", TaxonName = "Archaea", RankName = "Kingdom" },
             };
 
             await DispatcherUtil.Dispatch(() =>
             {
                 TheList.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = kingdoms });
+                TaxonName.Text = "Welcome to Taxonomica!";
+                RankName.Text = "Select a kingdom to get started";
             });
         }
 
@@ -139,6 +170,12 @@ namespace Taxonomica
         private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var tsn = (((StackPanel)sender).DataContext as HierarchyItem).TSN;
+            Frame.Navigate(typeof(TaxonPage), new TaxonPageNavigationArgs { TSN = tsn });
+        }
+
+        private void StackPanel_Tapped_1(object sender, TappedRoutedEventArgs e)
+        {
+            var tsn = (((StackPanel)sender).DataContext as SynonymItem).TSN;
             Frame.Navigate(typeof(TaxonPage), new TaxonPageNavigationArgs { TSN = tsn });
         }
     }
