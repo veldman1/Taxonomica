@@ -43,5 +43,7 @@ namespace Taxonomica
             get { return (string)GetValue(NameProperty); }
             set { SetValue(NameProperty, (string)value); }
         }
+
+        public string TSN { get; set; }
     }
 }

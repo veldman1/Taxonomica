@@ -17,7 +17,7 @@
             </GridView.ItemContainerStyle>
             <GridView.ItemTemplate>
                 <DataTemplate x:Name="ImageOverlayTemplate">
-                    <Grid Width="400" Height="300">
+                    <Grid Tapped="Grid_Tapped" Width="400" Height="300">
                         <Image Source="{Binding Image}" Stretch="UniformToFill"/>
                         <StackPanel Orientation="Vertical" Height="60" VerticalAlignment="Bottom" Padding="5" 
                                     Opacity=".7" Background="{ThemeResource MyAcrylicBrush}" >

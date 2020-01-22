@@ -5,9 +5,9 @@
     xmlns:local="using:Taxonomica"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -26,29 +26,69 @@
             </Grid.ColumnDefinitions>
 
             <ProgressRing Grid.Column="1" Grid.Row="1" x:Name="ProgressItem" />
+
+            <Grid x:Name="DescendingGrid" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="64" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Background="AntiqueWhite" VerticalAlignment="Center">
+                    <TextBlock Text="Descending Taxons" Padding="32" FontWeight="Bold" FontSize="18" />
+                </StackPanel>
+                <ListView x:Name="TheList" Grid.Row="1">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel HorizontalAlignment="Stretch" Tapped="StackPanel_Tapped" Padding="10" extensions:Mouse.Cursor="Hand">
+                                <TextBlock Text="{Binding TaxonName}" />
+                                <TextBlock Text="{Binding RankName}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Grid>
             
-            <ListView Grid.Column="1" x:Name="TheList" Grid.Row="1">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel HorizontalAlignment="Stretch" Tapped="StackPanel_Tapped" Padding="10">
-                            <TextBlock Text="{Binding TaxonName}" />
-                            <TextBlock Text="{Binding RankName}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-            <StackPanel Padding="32" Grid.Column="0" Background="FloralWhite">
-                <Image Grid.Column="1" x:Name="TaxonImage" />
-                <TextBlock IsTextSelectionEnabled="True" FontSize="18" Margin="0 16 0 0">
+            <StackPanel Grid.Column="0" Background="FloralWhite">
+                <StackPanel Padding="32" Background="NavajoWhite">
+                    <Image x:Name="TaxonImage" />
+                    <TextBlock IsTextSelectionEnabled="True" FontSize="18" Margin="0 16 0 0">
                     <Run x:Name="TaxonName" FontWeight="Bold" />
                     <Run x:Name="CommonName" />
-                </TextBlock>
-                <TextBlock x:Name="RankName" FontSize="16" Margin="0 16 0 0" />
+                    </TextBlock>
+                    <StackPanel Orientation="Horizontal"  Margin="0 16 0 0">
+                        <TextBlock x:Name="RankName" FontSize="16"  VerticalAlignment="Center" />
+                        <Button x:Name="SynonymsButton" Visibility="Collapsed" VerticalAlignment="Center" Margin="8 0 0 0" extensions:Mouse.Cursor="Hand" Content="Synonyms" >
+                            <Button.Flyout>
+                                <Flyout>
+                                    <ListBox x:Name="SynonymsList" Visibility="Collapsed">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Tapped="StackPanel_Tapped_1" HorizontalAlignment="Stretch" extensions:Mouse.Cursor="Hand" Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding SciName}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                        <ListBox.ItemContainerStyle>
+                                            <Style TargetType="ListBoxItem">
+                                                <Setter Property="Margin" Value="0" />
+                                            </Style>
+                                        </ListBox.ItemContainerStyle>
+                                    </ListBox>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Padding="32">
+                    <TextBlock x:Name="AuthorshipEntry" Visibility="Collapsed" IsTextSelectionEnabled="True" FontSize="18">
+                        <Run Text="Authorship" FontWeight="Bold" />
+                        <Run x:Name="AuthorName" />
+                    </TextBlock>
+                </StackPanel>
             </StackPanel>
         </Grid>
     </Grid>
