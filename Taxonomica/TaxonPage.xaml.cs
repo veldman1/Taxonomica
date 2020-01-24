@@ -60,7 +60,6 @@ namespace Taxonomica
                             Content = "The page could not be loaded",
                             CloseButtonText = "Ok",
                         };
-
                         ContentDialogResult result = await errorDialog.ShowAsync();
                     });
                 }
@@ -86,9 +85,11 @@ namespace Taxonomica
 
             var childRankName = Rank.Next(currentTaxonHierarchy.RankName);
             var children = new List<HierarchyItem>();
+            var ascending = new List<HierarchyItem>();
             while (children.Count == 0 && childRankName != null)
             {
                 children = hierarchy.HierarchyList.Where(hierarchyItem => hierarchyItem.RankName.Equals(childRankName)).ToList();
+                ascending = hierarchy.HierarchyList.Where(hierarchyItem => !hierarchyItem.RankName.Equals(childRankName)).ToList();
                 childRankName = Rank.Next(childRankName);
             }
 
@@ -136,6 +137,9 @@ namespace Taxonomica
                     SynonymsButton.Visibility = Visibility.Visible;
                     SynonymsList.SetBinding(ListBox.ItemsSourceProperty, new Binding { Source = synonymsCollection });
                 }
+
+                var pathItems = ascending.OrderBy(x => Rank.Ranks.ToList().IndexOf(x.RankName)).ToList();
+                TaxonPath.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = pathItems });
             });
         }
 
@@ -177,6 +181,13 @@ namespace Taxonomica
         {
             var tsn = (((StackPanel)sender).DataContext as SynonymItem).TSN;
             Frame.Navigate(typeof(TaxonPage), new TaxonPageNavigationArgs { TSN = tsn });
+        }
+
+        private void StackPanel_Tapped_2(object sender, TappedRoutedEventArgs e)
+        {
+            var tsn = (((StackPanel)sender).DataContext as HierarchyItem).TSN;
+            Frame.Navigate(typeof(TaxonPage), new TaxonPageNavigationArgs { TSN = tsn });
+
         }
     }
 }
