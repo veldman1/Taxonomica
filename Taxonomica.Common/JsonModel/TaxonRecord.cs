@@ -80,6 +80,5 @@ namespace Taxonomica.Common
     {
         [JsonProperty("authorship")]
         public string Author { get; set; }
-
     }
 }
