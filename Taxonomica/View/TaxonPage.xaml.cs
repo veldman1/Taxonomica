@@ -83,12 +83,11 @@ namespace Taxonomica
             var image = await RequestManager.RequestWikispeciesImage(currentTaxonHierarchy.TaxonName);
             var imageSource = image.Query.Pages.FirstOrDefault().Value.Thumbnail?.Source;
 
-            var childRankName = Rank.Next(currentTaxonHierarchy.RankName);
             var children = new List<HierarchyItem>();
             var ascending = new List<HierarchyItem>();
 
-            children = hierarchy.HierarchyList.Where(hierarchyItem => Rank.NumRankOf(childRankName) <= Rank.NumRankOf(hierarchyItem.RankName)).ToList();
-            ascending = hierarchy.HierarchyList.Where(hierarchyItem => Rank.NumRankOf(childRankName) > Rank.NumRankOf(hierarchyItem.RankName)).ToList();
+            children = hierarchy.HierarchyList.Where(hierarchyItem => Rank.NumRankOf(currentTaxonHierarchy.RankName) < Rank.NumRankOf(hierarchyItem.RankName)).ToList();
+            ascending = hierarchy.HierarchyList.Where(hierarchyItem => Rank.NumRankOf(currentTaxonHierarchy.RankName) >= Rank.NumRankOf(hierarchyItem.RankName)).ToList();
 
             await DispatcherUtil.Dispatch(() =>
             {
@@ -102,14 +101,16 @@ namespace Taxonomica
                 CommonName.Text = currentTaxon.GetCommonName();
                 RankName.Text = currentTaxonHierarchy.RankName;
 
-                if (string.IsNullOrWhiteSpace(currentTaxon.Author.Author))
+                if (string.IsNullOrWhiteSpace(currentTaxon.Author.Authorship))
                 {
+                    AuthorshipLabel.Visibility = Visibility.Collapsed;
                     AuthorshipEntry.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
+                    AuthorshipLabel.Visibility = Visibility.Visible;
                     AuthorshipEntry.Visibility = Visibility.Visible;
-                    AuthorName.Text = currentTaxon.Author.Author;
+                    AuthorName.Text = currentTaxon.Author.Authorship;
                 }
 
                 if (imageSource != null)
@@ -137,6 +138,13 @@ namespace Taxonomica
 
                 var pathItems = ascending.OrderBy(x => Rank.Ranks.ToList().IndexOf(x.RankName)).ToList();
                 TaxonPath.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = pathItems });
+
+                var expertsList = currentTaxon.ExpertList.Experts.Where(x => x != null).ToList();
+                Experts.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = expertsList });
+                if (expertsList.Any())
+                {
+                    ExpertsLabel.Visibility = Visibility.Visible;
+                }
             });
         }
 
@@ -155,8 +163,8 @@ namespace Taxonomica
             await DispatcherUtil.Dispatch(() =>
             {
                 TheList.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = kingdoms });
-                TaxonName.Text = "Welcome to Taxonomica!";
-                RankName.Text = "Select a kingdom to get started";
+                TaxonName.Text = "Taxonomica";
+                RankName.Text = "Select a kingdom";
             });
         }
 
@@ -166,17 +174,16 @@ namespace Taxonomica
             Frame.Navigate(typeof(TaxonPage), new TaxonPageNavigationArgs { TSN = tsn });
         }
 
-        private void StackPanel_Tapped_1(object sender, TappedRoutedEventArgs e)
+        private void SynonymTap(object sender, TappedRoutedEventArgs e)
         {
             var tsn = (((StackPanel)sender).DataContext as SynonymItem).TSN;
             Frame.Navigate(typeof(TaxonPage), new TaxonPageNavigationArgs { TSN = tsn });
         }
 
-        private void StackPanel_Tapped_2(object sender, TappedRoutedEventArgs e)
+        private void HierarchyTap(object sender, TappedRoutedEventArgs e)
         {
             var tsn = (((StackPanel)sender).DataContext as HierarchyItem).TSN;
             Frame.Navigate(typeof(TaxonPage), new TaxonPageNavigationArgs { TSN = tsn });
-
         }
     }
 }

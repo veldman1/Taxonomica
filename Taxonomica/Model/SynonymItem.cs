@@ -24,7 +24,7 @@ namespace Taxonomica
             typeof(SynonymItem),
             null);
 
-        public SynonymItem(TaxonRecordSynonym trs)
+        public SynonymItem(Synonym trs)
         {
             TSN = trs.TSN;
             SciName = trs.SciName;

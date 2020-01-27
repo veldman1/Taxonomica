@@ -11,45 +11,78 @@ namespace Taxonomica.Common
     public class TaxonRecord
     {
         [JsonProperty("commonNameList")]
-        public TaxonRecordCommonNamesList CommonNamesList { get; set; }
+        public CommonNamesList CommonNamesList { get; set; }
 
         [JsonProperty("synonymList")]
-        public TaxonRecordSynonymList SynonymList { get; set; }
+        public SynonymList SynonymList { get; set; }
 
         [JsonProperty("scientificName")]
-        public TaxonRecordScientificName ScientificName { get; set; }
+        public ScientificName ScientificName { get; set; }
 
         [JsonProperty("taxonAuthor")]
-        public TaxonRecordAuthor Author { get; set; }
+        public Author Author { get; set; }
+
+        [JsonProperty("expertList")]
+        public ExpertList ExpertList { get; set; }
 
         public string GetCommonName()
         {
             CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
             TextInfo textInfo = cultureInfo.TextInfo;
-            var commonName = CommonNamesList.CommonNames.Where(x => x != null).Where(x => x.Language.Equals("English")).FirstOrDefault()?.CommonName ?? string.Empty;
+            var commonName = CommonNamesList.CommonNames.Where(x => x != null).Where(x => x.Language.Equals("English")).FirstOrDefault()?.Name ?? string.Empty;
             return textInfo.ToTitleCase(commonName);
         }
     }
 
     [JsonObject(MemberSerialization = MemberSerialization.OptOut)]
-    public class TaxonRecordCommonName
+    public class ExpertList
+    {
+        [JsonProperty("experts")]
+        public List<Expert> Experts { get; set; }
+    }
+
+    [JsonObject(MemberSerialization = MemberSerialization.OptOut)]
+    public class Expert
+    {
+        [JsonProperty("expert")]
+        public string Name { get; set; }
+
+        [JsonProperty("comment")]
+        public string Comment { get; set; }
+
+        [JsonProperty("updateDate")]
+        public string UpdateDate { get; set; }
+
+        [JsonProperty("referenceFor")]
+        public List<ReferenceFor> ReferenceDescription { get; set; }
+    }
+
+    [JsonObject(MemberSerialization = MemberSerialization.OptOut)]
+    public class ReferenceFor
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+    }
+
+    [JsonObject(MemberSerialization = MemberSerialization.OptOut)]
+    public class CommonName
     {
         [JsonProperty("commonName")]
-        public string CommonName { get; set; }
+        public string Name { get; set; }
 
         [JsonProperty("language")]
         public string Language { get; set; }
     }
 
     [JsonObject(MemberSerialization = MemberSerialization.OptOut)]
-    public class TaxonRecordCommonNamesList
+    public class CommonNamesList
     {
         [JsonProperty("commonNames")]
-        public List<TaxonRecordCommonName> CommonNames { get; set; }
+        public List<CommonName> CommonNames { get; set; }
     }
 
     [JsonObject(MemberSerialization = MemberSerialization.OptOut)]
-    public class TaxonRecordSynonym
+    public class Synonym
     {
         [JsonProperty("sciName")]
         public string SciName { get; set; }
@@ -59,14 +92,14 @@ namespace Taxonomica.Common
     }
 
     [JsonObject(MemberSerialization = MemberSerialization.OptOut)]
-    public class TaxonRecordSynonymList
+    public class SynonymList
     {
         [JsonProperty("synonyms")]
-        public List<TaxonRecordSynonym> Synonyms { get; set; }
+        public List<Synonym> Synonyms { get; set; }
     }
 
     [JsonObject(MemberSerialization = MemberSerialization.OptOut)]
-    public class TaxonRecordScientificName
+    public class ScientificName
     {
         [JsonProperty("combinedName")]
         public string CombinedName { get; set; }
@@ -76,9 +109,9 @@ namespace Taxonomica.Common
     }
 
     [JsonObject(MemberSerialization = MemberSerialization.OptOut)]
-    public class TaxonRecordAuthor
+    public class Author
     {
         [JsonProperty("authorship")]
-        public string Author { get; set; }
+        public string Authorship { get; set; }
     }
 }

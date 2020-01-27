@@ -30,7 +30,7 @@ namespace Taxonomica
             {
                 await DispatcherUtil.Dispatch(async () =>
                 {
-                    var tsnList = new List<string> { "173420", "161061", "159785" };
+                    var tsnList = new List<string> { "174371", "173420", "161061", "159785" };
                     var exploreItems = new ObservableCollection<ExploreItem>();
 
                     ExploreGrid.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = exploreItems });
