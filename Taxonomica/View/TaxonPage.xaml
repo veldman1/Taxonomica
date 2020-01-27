@@ -13,7 +13,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <ScrollViewer Background="White" HorizontalScrollBarVisibility="Hidden" HorizontalScrollMode="Auto" >
+        <ScrollViewer Background="White" HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto" >
             <ListView x:Name="TaxonPath" ScrollViewer.VerticalScrollMode="Disabled" HorizontalAlignment="Stretch"  Background="WhiteSmoke">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -42,12 +42,11 @@
 
             <Grid x:Name="DescendingGrid" Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="64" />
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Padding="16" Background="AntiqueWhite" VerticalAlignment="Center" Orientation="Horizontal">
-                    <Button Click="Back_Clicked" Background="AntiqueWhite" Style="{StaticResource NavigationBackButtonNormalStyle}" VerticalAlignment="Center" extensions:Mouse.Cursor="Hand"/>
-                    <TextBlock Text="Descending Taxons" Margin="8 0 0 0" FontWeight="Bold" VerticalAlignment="Center" FontSize="18" />
+                <StackPanel Grid.Row="0" Padding="16" Background="AntiqueWhite" Orientation="Horizontal">
+                    <TextBlock Text="Descending Taxons" FontWeight="Bold" VerticalAlignment="Center" FontSize="18" />
                 </StackPanel>
                 <ListView x:Name="TheList" Grid.Row="1">
                     <ListView.ItemTemplate>
@@ -81,9 +80,7 @@
                                     <ListBox x:Name="SynonymsList" Visibility="Collapsed">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <StackPanel Tapped="StackPanel_Tapped_1" HorizontalAlignment="Stretch" extensions:Mouse.Cursor="Hand" Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding SciName}" />
-                                                </StackPanel>
+                                                <TextBlock Text="{Binding SciName}" />
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                         <ListBox.ItemContainerStyle>
