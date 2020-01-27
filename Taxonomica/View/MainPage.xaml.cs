@@ -27,7 +27,6 @@ namespace Taxonomica
             var currentView = SystemNavigationManager.GetForCurrentView();
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             currentView.BackRequested += MainWindowBackRequested;
-
         }
 
         private void MainWindowBackRequested(object sender, BackRequestedEventArgs e)
