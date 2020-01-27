@@ -86,12 +86,9 @@ namespace Taxonomica
             var childRankName = Rank.Next(currentTaxonHierarchy.RankName);
             var children = new List<HierarchyItem>();
             var ascending = new List<HierarchyItem>();
-            while (children.Count == 0 && childRankName != null)
-            {
-                children = hierarchy.HierarchyList.Where(hierarchyItem => hierarchyItem.RankName.Equals(childRankName)).ToList();
-                ascending = hierarchy.HierarchyList.Where(hierarchyItem => !hierarchyItem.RankName.Equals(childRankName)).ToList();
-                childRankName = Rank.Next(childRankName);
-            }
+
+            children = hierarchy.HierarchyList.Where(hierarchyItem => Rank.NumRankOf(childRankName) <= Rank.NumRankOf(hierarchyItem.RankName)).ToList();
+            ascending = hierarchy.HierarchyList.Where(hierarchyItem => Rank.NumRankOf(childRankName) > Rank.NumRankOf(hierarchyItem.RankName)).ToList();
 
             await DispatcherUtil.Dispatch(() =>
             {
@@ -161,14 +158,6 @@ namespace Taxonomica
                 TaxonName.Text = "Welcome to Taxonomica!";
                 RankName.Text = "Select a kingdom to get started";
             });
-        }
-
-        private void Back_Clicked(object sender, RoutedEventArgs e)
-        {
-            if (Frame.CanGoBack)
-            {
-                Frame.GoBack();
-            }
         }
 
         private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)

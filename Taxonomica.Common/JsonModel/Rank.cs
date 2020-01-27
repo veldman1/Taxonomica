@@ -13,13 +13,18 @@ namespace Taxonomica.Common
                 "Kingdom", "Subkingdom", "Infrakingdom", "Superdivision", "Division", "Subdivision", "Superphylum", "Phylum", "Subphylum",
                 "Infraphylum", "Superclass", "Class", "Subclass", "Infraclass", "Superorder", "Order", "Suborder",
                 "Infraorder", "Section", "Subsection", "Superfamily", "Family", "Subfamily", "Tribe", "Subtribe", "Genus",
-                "Subgenus", "Species",
+                "Subgenus", "Species", "Subspecies",
         };
 
         public static string Next(string rank)
         {
             var next = Ranks.SkipWhile(x => x != rank).Skip(1).FirstOrDefault();
             return next;
+        }
+
+        public static int NumRankOf(string rank)
+        {
+            return Ranks.ToList().IndexOf(rank);
         }
     }
 }

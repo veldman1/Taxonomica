@@ -127,20 +127,20 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AboutPage.xaml.cs">
+    <Compile Include="View\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\ExploreItem.cs" />
-    <Compile Include="ExplorePage.xaml.cs">
+    <Compile Include="View\ExplorePage.xaml.cs">
       <DependentUpon>ExplorePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DispatcherUtil.cs" />
+    <Compile Include="Util\DispatcherUtil.cs" />
     <Compile Include="Model\SynonymItem.cs" />
-    <Compile Include="TaxonPageNavigationArgs.cs" />
-    <Compile Include="TaxonPage.xaml.cs">
+    <Compile Include="Util\TaxonPageNavigationArgs.cs" />
+    <Compile Include="View\TaxonPage.xaml.cs">
       <DependentUpon>TaxonPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -165,19 +165,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AboutPage.xaml">
+    <Page Include="View\AboutPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ExplorePage.xaml">
+    <Page Include="View\ExplorePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TaxonPage.xaml">
+    <Page Include="View\TaxonPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="View\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

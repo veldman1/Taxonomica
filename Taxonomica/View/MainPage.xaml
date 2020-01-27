@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"> 
 
     <Grid>
-        <NavigationView IsBackButtonVisible="Collapsed" IsTabStop="False" ItemInvoked="NavigationView_ItemInvoked" IsSettingsVisible="False">
+        <NavigationView x:Name="NavigationView" IsTabStop="False" ItemInvoked="NavigationView_ItemInvoked" IsSettingsVisible="False" IsBackButtonVisible="Collapsed">
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="Globe">
                     <TextBlock Tag="hierarchy">Hierarchy</TextBlock>
