@@ -8,7 +8,18 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <TextBlock Padding="32" FontSize="18" FontWeight="Bold" Text="About" />
-    </Grid>
+    <StackPanel Margin="16" >
+        <StackPanel Background="NavajoWhite">
+            <TextBlock FontSize="32" Margin="16"  FontWeight="Bold" Text="About" />
+        </StackPanel>
+        <TextBlock FontSize="14" Margin="16 16 8 8"  TextWrapping="Wrap">
+            <Run Text="Taxonomica was created as a frontend for the" />
+            <Run FontStyle="Italic" Text="itis.gov"  />
+            <Run Text="species database and is maintained by Veldynamics." />
+        </TextBlock>
+
+        <TextBlock FontSize="14" Margin="16 8 8 8" TextWrapping="Wrap">
+            <Run Text="The app retains no personal information, but does access the United States taxonomical database ITIS."/>
+        </TextBlock>
+    </StackPanel>
 </Page>

@@ -9,13 +9,16 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"> 
 
     <Grid>
-        <NavigationView x:Name="NavigationView" IsTabStop="False" ItemInvoked="NavigationView_ItemInvoked" IsSettingsVisible="False" IsBackButtonVisible="Collapsed">
+        <NavigationView x:Name="NavigationView" IsTabStop="False" ItemInvoked="NavigationView_ItemInvoked" IsSettingsVisible="False" IsPaneOpen="True" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed">
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="Globe">
                     <TextBlock Tag="hierarchy">Hierarchy</TextBlock>
                 </NavigationViewItem>
                 <NavigationViewItem Icon="OutlineStar">
                     <TextBlock Tag="explore">Explore</TextBlock>
+                </NavigationViewItem>
+                <NavigationViewItem Icon="Help">
+                    <TextBlock Tag="about">About</TextBlock>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
             <Frame x:Name="contentFrame"></Frame>

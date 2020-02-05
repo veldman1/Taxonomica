@@ -26,17 +26,29 @@ namespace Taxonomica
         {
             InitializeComponent();
 
-            Task.Run(async () =>
+            try
             {
-                await DispatcherUtil.Dispatch(async () =>
+                Task.Run(InitializeExplorePage);
+            }
+            catch
+            {
+            }
+        }
+
+        private async Task InitializeExplorePage()
+        {
+            await DispatcherUtil.Dispatch(async () =>
                 {
-                    var tsnList = new List<string> { "174371", "173420", "161061", "159785" };
                     var exploreItems = new ObservableCollection<ExploreItem>();
 
-                    ExploreGrid.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = exploreItems });
-
-                    var tasks = tsnList.Select(async (tsn) =>
+                    try
                     {
+                        var tsnList = new List<string> { "174371", "173420", "161061", "159785", "500028", "180130", "552304", "552303" };
+
+                        ExploreGrid.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = exploreItems });
+
+                        var tasks = tsnList.Select(async (tsn) =>
+                            {
                         var newItem = new ExploreItem();
                         exploreItems.Add(newItem);
 
@@ -56,9 +68,24 @@ namespace Taxonomica
                         newItem.Loading = false;
                     });
 
-                    await Task.WhenAll(tasks);
+                        await Task.WhenAll(tasks);
+                    }
+                    catch
+                    {
+                        ContentDialog errorDialog = new ContentDialog
+                        {
+                            Title = "Error",
+                            Content = "The page could not be loaded",
+                            CloseButtonText = "Ok",
+                        };
+                        ContentDialogResult result = await errorDialog.ShowAsync();
+
+                        exploreItems.Clear();
+
+                        Frame.Navigate(typeof(ErrorPage), null);
+                    }
                 });
-            });
+
         }
 
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)

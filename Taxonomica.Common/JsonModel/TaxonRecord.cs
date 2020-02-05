@@ -25,6 +25,9 @@ namespace Taxonomica.Common
         [JsonProperty("expertList")]
         public ExpertList ExpertList { get; set; }
 
+        [JsonProperty("otherSourceList")]
+        public OtherSourcesList OtherSourcesList { get; set; }
+
         public string GetCommonName()
         {
             CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
@@ -32,6 +35,32 @@ namespace Taxonomica.Common
             var commonName = CommonNamesList.CommonNames.Where(x => x != null).Where(x => x.Language.Equals("English")).FirstOrDefault()?.Name ?? string.Empty;
             return textInfo.ToTitleCase(commonName);
         }
+    }
+
+    [JsonObject(MemberSerialization = MemberSerialization.OptOut)]
+    public class OtherSourcesList
+    {
+        [JsonProperty("otherSources")]
+        public List<OtherSources> OtherSources { get; set; }
+    }
+
+    [JsonObject(MemberSerialization = MemberSerialization.OptOut)]
+    public class OtherSources
+    {
+        [JsonProperty("source")]
+        public string Source { get; set; }
+
+        [JsonProperty("sourceComment")]
+        public string SourceComment { get; set; }
+
+        [JsonProperty("sourceType")]
+        public string SourceType { get; set; }
+
+        [JsonProperty("version")]
+        public string Version { get; set; }
+
+        [JsonProperty("updateDate")]
+        public string UpdateDate { get; set; }
     }
 
     [JsonObject(MemberSerialization = MemberSerialization.OptOut)]

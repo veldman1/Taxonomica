@@ -3,3 +3,7 @@ Taxonomica.Common/obj/
 Taxonomica.Common/bin/
 Taxonomica/bin/
 Taxonomica/obj/
+Taxonomica/AppPackages/
+Taxonomica/Taxonomica.csproj.user
+Taxonomica/Package.StoreAssociation.xml
+Taxonomica/BundleArtifacts/
