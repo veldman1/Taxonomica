@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="7084dddd-7196-47b7-8b4c-b9f895f555f5"
-    Publisher="CN=roger"
+    Name="12360Veldynamics.Taxonomica"
+    Publisher="CN=19AD3AF2-F5FF-43ED-B8B4-E4171B803F7A"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="7084dddd-7196-47b7-8b4c-b9f895f555f5" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="b3129b53-af3e-4020-9178-b38e6a67ec49" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Taxonomica</DisplayName>
-    <PublisherDisplayName>roger</PublisherDisplayName>
+    <PublisherDisplayName>Veldynamics</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -36,9 +36,9 @@
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="Taxonomica"
-        BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        BackgroundColor="#008949">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="#008949"/>
       </uap:VisualElements>
     </Application>
   </Applications>

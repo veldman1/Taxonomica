@@ -61,6 +61,7 @@ namespace Taxonomica
                             CloseButtonText = "Ok",
                         };
                         ContentDialogResult result = await errorDialog.ShowAsync();
+                        Frame.Navigate(typeof(ErrorPage), null);
                     });
                 }
                 finally
@@ -144,6 +145,14 @@ namespace Taxonomica
                 if (expertsList.Any())
                 {
                     ExpertsLabel.Visibility = Visibility.Visible;
+                }
+
+                var otherSourcesList = currentTaxon.OtherSourcesList.OtherSources.Where(x => x != null && !string.IsNullOrEmpty(x.SourceComment) && !string.IsNullOrEmpty(x.Source)).ToList();
+                OtherSources.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = otherSourcesList });
+                if (otherSourcesList.Any())
+                {
+                    OtherSourcesLabel.Visibility = Visibility.Visible;
+                    OtherSources.Visibility = Visibility.Visible;
                 }
             });
         }

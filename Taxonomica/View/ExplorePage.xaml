@@ -5,6 +5,7 @@
     xmlns:local="using:Taxonomica"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -17,7 +18,7 @@
             </GridView.ItemContainerStyle>
             <GridView.ItemTemplate>
                 <DataTemplate x:Name="ImageOverlayTemplate">
-                    <Grid Tapped="Grid_Tapped" Width="400" Height="300">
+                    <Grid Tapped="Grid_Tapped" Width="300" Height="200" extensions:Mouse.Cursor="Hand">
                         <Image Source="{Binding Image}" Stretch="UniformToFill"/>
                         <StackPanel Orientation="Vertical" Height="60" VerticalAlignment="Bottom" Padding="5" 
                                     Opacity=".7" Background="{ThemeResource MyAcrylicBrush}" >
