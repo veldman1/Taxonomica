@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using Newtonsoft.Json;
+using static Taxonomica.Common.JsonModel.CommonName;
 
 namespace Taxonomica.Common
 {
@@ -91,23 +92,6 @@ namespace Taxonomica.Common
     {
         [JsonProperty("name")]
         public string Name { get; set; }
-    }
-
-    [JsonObject(MemberSerialization = MemberSerialization.OptOut)]
-    public class CommonName
-    {
-        [JsonProperty("commonName")]
-        public string Name { get; set; }
-
-        [JsonProperty("language")]
-        public string Language { get; set; }
-    }
-
-    [JsonObject(MemberSerialization = MemberSerialization.OptOut)]
-    public class CommonNamesList
-    {
-        [JsonProperty("commonNames")]
-        public List<CommonName> CommonNames { get; set; }
     }
 
     [JsonObject(MemberSerialization = MemberSerialization.OptOut)]

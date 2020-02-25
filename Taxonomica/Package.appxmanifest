@@ -9,7 +9,7 @@
   <Identity
     Name="12360Veldynamics.Taxonomica"
     Publisher="CN=19AD3AF2-F5FF-43ED-B8B4-E4171B803F7A"
-    Version="1.0.0.0" />
+    Version="1.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="b3129b53-af3e-4020-9178-b38e6a67ec49" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
