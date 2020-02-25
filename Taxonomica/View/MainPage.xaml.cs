@@ -47,6 +47,9 @@ namespace Taxonomica
                     case "hierarchy":
                         contentFrame.Navigate(typeof(TaxonPage));
                         break;
+                    case "search":
+                        contentFrame.Navigate(typeof(SearchPage));
+                        break;
                     case "explore":
                         contentFrame.Navigate(typeof(ExplorePage));
                         break;

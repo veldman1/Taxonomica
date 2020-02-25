@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Taxonomica.Common.JsonModel;
 
 namespace Taxonomica.Common
 {
@@ -45,6 +46,20 @@ namespace Taxonomica.Common
         {
             var taxonRecord = await Request<TaxonRecord>("https://www.itis.gov/ITISWebService/jsonservice/getFullRecordFromTSN?tsn=" + tsn);
             return taxonRecord;
+        }
+
+        public static async Task<SearchResults> SearchByCommonName(string commonName, int page = 0)
+        {
+            if (page > 0)
+            {
+                var taxonRecord = await Request<SearchResults>("https://www.itis.gov/ITISWebService/jsonservice/searchForAnyMatchPaged?srchKey=" + commonName + "&pageSize=25&pageNum=1&ascend=false");
+                return taxonRecord;
+            }
+            else
+            {
+                var taxonRecord = await Request<SearchResults>("https://www.itis.gov/ITISWebService/jsonservice/searchForAnyMatch?srchKey=" + commonName);
+                return taxonRecord;
+            }
         }
     }
 }

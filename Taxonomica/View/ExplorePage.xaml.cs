@@ -47,35 +47,34 @@ namespace Taxonomica
 
                         ExploreGrid.SetBinding(ListView.ItemsSourceProperty, new Binding { Source = exploreItems });
 
-                        var tasks = tsnList.Select(async (tsn) =>
-                            {
-                        var newItem = new ExploreItem();
-                        exploreItems.Add(newItem);
+                        foreach (var tsn in tsnList)
+                        {
+                            var newItem = new ExploreItem();
 
-                        newItem.Loading = true;
+                            newItem.Loading = true;
 
-                        var record = await RequestManager.RequestFullRecord(tsn);
+                            var record = await RequestManager.RequestFullRecord(tsn);
 
-                        newItem.Name = record.GetCommonName();
-                        newItem.TSN = record.ScientificName.TSN;
+                            newItem.Name = record.GetCommonName();
+                            newItem.TSN = record.ScientificName.TSN;
 
-                        var imageModelLow = await RequestManager.RequestWikispeciesImage(record.ScientificName.CombinedName, 50);
-                        newItem.Image = new BitmapImage(new Uri(imageModelLow.GetThumbnail(), UriKind.Absolute));
+                            // var imageModelLow = await RequestManager.RequestWikispeciesImage(record.ScientificName.CombinedName, 50);
+                            // newItem.Image = new BitmapImage(new Uri(imageModelLow.GetThumbnail(), UriKind.Absolute));
 
-                        var imageModel = await RequestManager.RequestWikispeciesImage(record.ScientificName.CombinedName, 400);
-                        newItem.Image = new BitmapImage(new Uri(imageModel.GetThumbnail(), UriKind.Absolute));
+                            var imageModel = await RequestManager.RequestWikispeciesImage(record.ScientificName.CombinedName, 400);
+                            newItem.Image = new BitmapImage(new Uri(imageModel.GetThumbnail(), UriKind.Absolute));
 
-                        newItem.Loading = false;
-                    });
+                            newItem.Loading = false;
 
-                        await Task.WhenAll(tasks);
+                            exploreItems.Add(newItem);
+                        }
                     }
-                    catch
+                    catch (Exception e)
                     {
                         ContentDialog errorDialog = new ContentDialog
                         {
                             Title = "Error",
-                            Content = "The page could not be loaded",
+                            Content = e.Message + " " + e.InnerException.ToString(),
                             CloseButtonText = "Ok",
                         };
                         ContentDialogResult result = await errorDialog.ShowAsync();

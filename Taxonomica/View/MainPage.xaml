@@ -14,6 +14,9 @@
                 <NavigationViewItem Icon="Globe">
                     <TextBlock Tag="hierarchy">Hierarchy</TextBlock>
                 </NavigationViewItem>
+                <NavigationViewItem Icon="Zoom">
+                    <TextBlock Tag="search">Search</TextBlock>
+                </NavigationViewItem>
                 <NavigationViewItem Icon="OutlineStar">
                     <TextBlock Tag="explore">Explore</TextBlock>
                 </NavigationViewItem>
