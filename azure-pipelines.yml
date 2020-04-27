@@ -1,9 +1,5 @@
 pool:
   name: Azure Pipelines
-  demands:
-  - msbuild
-  - visualstudio
-  - vstest
 
 steps:
 - task: NuGetToolInstaller@0
